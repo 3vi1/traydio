@@ -1,0 +1,78 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
+.python-version
+
+# Build / distribution
+build/
+dist/
+wheels/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+MANIFEST
+
+# C extensions
+*.so
+
+# Test / coverage
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+nosetests.xml
+.hypothesis/
+.benchmarks/
+
+# Type checking / linting
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.pyre/
+.pylint.d/
+.ropeproject/
+
+# Jupyter / IPython
+.ipynb_checkpoints/
+.ipython/
+
+# Editors / IDE
+.vscode/
+.idea/
+.fleet/
+
+# OS files
+.DS_Store
+Thumbs.db
+.directory
+
+# Caches / misc
+.cache/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Project local dirs
+.local/
+
+# Logs and temp/backups
+*.log
+*~
+*.swp
+*.swo
+.#*
+#*#
+*.orig
+*.bak
+*.tmp

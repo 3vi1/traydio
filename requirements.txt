@@ -1,0 +1,3 @@
+PyQt6>=6.5
+PyGObject>=3.44
+mutagen>=1.47
