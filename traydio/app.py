@@ -230,12 +230,9 @@ class TraydioApp(QObject):
     
     def _on_tray_activated(self, reason):
         """Handle tray icon activation."""
-        if reason == QSystemTrayIcon.ActivationReason.Trigger:
-            menu = self.tray_icon.contextMenu()
-            if menu is not None:
-                menu.popup(QCursor.pos())
-        elif reason == QSystemTrayIcon.ActivationReason.MiddleClick:
-            # Middle-click - toggle playback
+        if reason in (QSystemTrayIcon.ActivationReason.Trigger, 
+                      QSystemTrayIcon.ActivationReason.MiddleClick):
+            # Left-click or Middle-click - toggle playback
             if self.playing:
                 self._stop_playback()
             else:

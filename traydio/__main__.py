@@ -5,7 +5,8 @@ Entry point for running traydio as a module with 'python -m traydio'.
 """
 
 import sys
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication, QMessageBox
+from PyQt6.QtCore import QSharedMemory
 from traydio.app import TraydioApp
 
 
@@ -18,6 +19,13 @@ def main():
     app.setQuitOnLastWindowClosed(False)  # Allow app to run when no windows are shown
     app.setApplicationName("traydio")
     app.setApplicationDisplayName("traydio")
+    
+    # Single instance check
+    shared_memory = QSharedMemory("traydio-single-instance")
+    if not shared_memory.create(1):
+        # Another instance is already running
+        QMessageBox.warning(None, "traydio", "Another instance of traydio is already running.")
+        sys.exit(1)
     
     # Create and start the app
     tray_app = TraydioApp()
