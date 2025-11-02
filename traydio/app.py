@@ -476,7 +476,7 @@ class TraydioApp(QObject):
         Modal, but does not interfere with background playback/recording.
         """
         try:
-            img_path = os.path.join(os.path.dirname(__file__), "about.png")
+            img_path = os.path.join(os.path.dirname(__file__), "../resources/about.png")
             pix = QPixmap(img_path)
             if pix.isNull():
                 QMessageBox.information(None, "About traydio", "About image not found.")
