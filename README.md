@@ -14,6 +14,14 @@ A lightweight internet radio player for Linux (KDE Plasma 6 friendly) that lives
   - MP3 parts get minimal ID3v2.3 tags (artist, title, date)
 - Settings UI stored in `~/.config/traydio/config.json`
 
+## Screenshots
+
+![Traydio tray icon visible in the system tray](resources/icon_1.png)
+
+![Traydio tray context menu with playback, volume, recording, and settings](resources/menu_1.png)
+
+![Traydio Settings dialog showing recording options and paths](resources/settings_1.png)
+
 ## Requirements
 
 - Linux (tested with Wayland)
