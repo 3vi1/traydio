@@ -13,7 +13,7 @@ from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
     QPushButton, QFileDialog, QComboBox, QDialogButtonBox, QGroupBox,
-    QFormLayout, QLineEdit, QTextEdit, QMessageBox
+    QFormLayout, QLineEdit, QTextEdit, QMessageBox, QTabWidget, QWidget
 )
 from PyQt6.QtGui import QIcon, QIntValidator
 
@@ -41,22 +41,25 @@ class SettingsDialog(QDialog):
         # Setup UI
         self.setWindowTitle("traydio Settings")
         self.setWindowIcon(QIcon.fromTheme("audio-radio"))
-        self.resize(600, 400)
+        self.resize(650, 500)
         
-        # Create layouts
+        # Create main layout
         self.main_layout = QVBoxLayout(self)
         
-        # Create stations group
-        self.create_stations_group()
+        # Create tab widget
+        self.tab_widget = QTabWidget()
         
-        # Create recording options group
-        self.create_recording_group()
+        # Create tabs
+        self.create_stations_tab()
+        self.create_recording_tab()
+        self.create_buffers_tab()
+        self.create_icons_tab()
         
-        # Create buffer settings group
-        self.create_buffer_settings_group()
-        
-        # Create tray icon group
-        self.create_tray_icon_group()
+        # Add tabs to tab widget
+        self.tab_widget.addTab(self.stations_tab, "Stations")
+        self.tab_widget.addTab(self.recording_tab, "Recording")
+        self.tab_widget.addTab(self.buffers_tab, "Buffers")
+        self.tab_widget.addTab(self.icons_tab, "Icons")
 
         # Create button box with Apply support
         self.button_box = QDialogButtonBox(
@@ -73,20 +76,20 @@ class SettingsDialog(QDialog):
             self.apply_button.clicked.connect(self._on_apply_clicked)
 
         # Add widgets to main layout
-        self.main_layout.addWidget(self.stations_group)
-        self.main_layout.addWidget(self.recording_group)
-        self.main_layout.addWidget(self.buffer_settings_group)
-        self.main_layout.addWidget(self.tray_icon_group)
+        self.main_layout.addWidget(self.tab_widget)
         self.main_layout.addWidget(self.button_box)
 
         # Baseline for dirty tracking (what's currently applied)
         self._last_applied_config = copy.deepcopy(self.config)
         self._dirty = False
         self._setup_dirty_tracking()
-    def create_tray_icon_group(self):
-        """Create and set up the tray icon settings group."""
-        self.tray_icon_group = QGroupBox("Tray Icons")
-        layout = QFormLayout(self.tray_icon_group)
+    def create_icons_tab(self):
+        """Create and set up the tray icons tab."""
+        self.icons_tab = QWidget()
+        main_layout = QVBoxLayout(self.icons_tab)
+        
+        icon_group = QGroupBox("Tray Icons")
+        layout = QFormLayout(icon_group)
 
         # Only two states are used by the app: playing and stopped (paused/stopped share the same state)
         self.icon_states = ["playing", "stopped"]
@@ -115,6 +118,9 @@ class SettingsDialog(QDialog):
         self.reset_icons_button = QPushButton("Reset to Default")
         self.reset_icons_button.clicked.connect(self._reset_icons)
         layout.addRow(self.reset_icons_button)
+        
+        main_layout.addWidget(icon_group)
+        main_layout.addStretch()
 
     def _browse_icon_file(self, state):
         """Open file dialog to select a .png icon for a given state."""
@@ -136,10 +142,14 @@ class SettingsDialog(QDialog):
         QMessageBox.information(self, "Tray Icons Reset", "Tray icons have been reset to default.")
         self._on_form_changed()
     
-    def create_stations_group(self):
-        """Create and set up the stations settings group."""
-        self.stations_group = QGroupBox("Stations")
-        layout = QVBoxLayout(self.stations_group)
+    def create_stations_tab(self):
+        """Create and set up the stations tab."""
+        self.stations_tab = QWidget()
+        layout = QVBoxLayout(self.stations_tab)
+        
+        # Add a label
+        label = QLabel("Manage your radio stations:")
+        layout.addWidget(label)
         
         # Station list
         self.station_list = QListWidget()
@@ -166,11 +176,15 @@ class SettingsDialog(QDialog):
         # Add widgets to layout
         layout.addWidget(self.station_list)
         layout.addLayout(buttons_layout)
+        layout.addStretch()
     
-    def create_recording_group(self):
-        """Create and set up the recording settings group."""
-        self.recording_group = QGroupBox("Recording Options")
-        layout = QFormLayout(self.recording_group)
+    def create_recording_tab(self):
+        """Create and set up the recording options tab."""
+        self.recording_tab = QWidget()
+        main_layout = QVBoxLayout(self.recording_tab)
+        
+        recording_group = QGroupBox("Recording Options")
+        layout = QFormLayout(recording_group)
         
         # Recording directory
         self.recording_dir_layout = QHBoxLayout()
@@ -208,11 +222,15 @@ class SettingsDialog(QDialog):
         layout.addRow("Recording Cache Limit (MB):", self.record_cache_limit_edit)
         layout.addRow("Part Saved Notification (ms):", self.notify_info_timeout_edit)
         layout.addRow("Warning Notification (ms):", self.notify_warning_timeout_edit)
+        
+        main_layout.addWidget(recording_group)
+        main_layout.addStretch()
     
-    def create_buffer_settings_group(self):
-        """Create and set up the buffer settings group."""
-        self.buffer_settings_group = QGroupBox("Buffer Settings")
-        layout = QFormLayout(self.buffer_settings_group)
+    def create_buffers_tab(self):
+        """Create and set up the buffer settings tab."""
+        self.buffers_tab = QWidget()
+        main_layout = QVBoxLayout(self.buffers_tab)
+        layout = QVBoxLayout()
         
         # Get default buffer settings from config
         buffer_settings = self.config.get('buffer_settings', {})
@@ -247,8 +265,11 @@ class SettingsDialog(QDialog):
         recording_layout.addRow("Max Time (seconds):", self.recording_time_edit)
         
         # Add widgets to layout
-        layout.addRow(playback_group)
-        layout.addRow(recording_group)
+        layout.addWidget(playback_group)
+        layout.addWidget(recording_group)
+        
+        main_layout.addLayout(layout)
+        main_layout.addStretch()
     
     def _populate_station_list(self):
         """Populate the station list from config."""
