@@ -139,11 +139,9 @@ Notes
 - Only PNG files are supported. When you pick an icon in Settings, the app will use that file path directly (it is not copied). If you later move or delete the file, the app will fall back to the theme icon.
 - To revert to theme icons, clear the path(s) in Settings → Tray Icons and press “Reset to Default.”
 
-
 Upgrade/migration
 
 - If you used an older version that had a distinct “Paused Icon,” the app will automatically migrate that value to the Paused/Stopped icon on first load and remove the legacy key from your config file the next time it’s saved.
-
 
 ## Troubleshooting
 

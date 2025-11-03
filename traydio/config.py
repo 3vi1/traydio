@@ -22,9 +22,37 @@ CONFIG_FILE = os.path.join(CONFIG_DIR, "config.json")
 DEFAULT_CONFIG = {
     "stations": [
         {
-            "name": "Example Radio",
-            "urls": ["https://example.com/stream"],
-            "current_url_index": 0
+            "current_url_index": 0,
+            "name": "Slay Radio",
+            "urls": [
+                "http://relay1.slayradio.com:8000",
+                "http://relay2.slayradio.com:8000",
+                "http://relay3.slayradio.com:8000"
+            ]
+        },
+        {
+            "current_url_index": 0,
+            "name": "Space Station",
+            "urls": [
+                "https://ice1.somafm.com/spacestation-128-aac",
+                "https://ice2.somafm.com/spacestation-128-aac"
+            ]
+        },
+        {
+            "current_url_index": 0,
+            "name": "Lush",
+            "urls": [
+                "https://ice1.somafm.com/lush-128-aac",
+                "https://ice2.somafm.com/lush-128-aac"
+            ]
+        },
+        {
+            "current_url_index": 0,
+            "name": "Secret Agent",
+            "urls": [
+                "https://ice1.somafm.com/secretagent-128-aac",
+                "https://ice2.somafm.com/secretagent-128-aac"
+            ]
         }
     ],
     "volume": 0.8,
