@@ -1,4 +1,4 @@
-# traydio
+# Traydio
 
 A lightweight internet radio player for Linux (KDE Plasma 6 friendly) that lives in your system tray. It plays online radio streams, shows now‑playing notifications, and can record streams to files with smart, RAM‑cached track splitting.
 
