@@ -233,14 +233,21 @@ class TraydioApp(QObject):
         if reason in (QSystemTrayIcon.ActivationReason.Trigger, 
                       QSystemTrayIcon.ActivationReason.MiddleClick):
             # Left-click or Middle-click - toggle playback
-            if self.playing:
-                self._stop_playback()
-            else:
-                if self.current_station:
-                    self._play_station(self.current_station)
-                elif 'stations' in self.config and self.config['stations']:
-                    # If no current station but stations exist, play first one
-                    self._play_station(self.config['stations'][0]['name'])
+            self.toggle_playback()
+
+    def toggle_playback(self):
+        """Toggle playback between play and stop.
+
+        Public method so it can be triggered by D-Bus or UI actions.
+        """
+        if self.playing:
+            self._stop_playback()
+        else:
+            if self.current_station:
+                self._play_station(self.current_station)
+            elif 'stations' in self.config and self.config['stations']:
+                # If no current station but stations exist, play first one
+                self._play_station(self.config['stations'][0]['name'])
     
     def _play_station(self, station_name):
         """

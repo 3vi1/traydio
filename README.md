@@ -105,6 +105,26 @@ python -m traydio
 
 The app will place an icon in your system tray.
 
+## Global Shortcut (KDE Plasma 6, Wayland)
+
+Traydio exposes a D‑Bus method so you can bind any global keyboard shortcut to toggle playback:
+
+- Service: `org.traydio.App`
+- Object: `/org/traydio/App`
+- Interface: `org.traydio.App`
+- Method: `TogglePlayback`
+
+You can bind it in KDE System Settings (Plasma 6):  Just assign a shortcut in System Settings / Shortcuts to the traydio-toggle.sh script in the program directory.
+
+- There is not no default shortcut key set by the app.
+
+
+
+Notes
+
+- Works on Wayland; no X11 dependencies.
+- If Traydio is already running, launching it again will invoke `TogglePlayback` on the existing instance and exit.
+
 ## Recording behavior
 
 - Enable “Record” from the tray menu.
